@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+
+<body>
+    <div id='root'>
+        <my-school></my-school>
+        <h2>名称: {{name}}</h2>
+        <h2>年龄: {{age}}</h2>
+        
+        <my-school/>
+        <!-- 自闭合 -->
+    </div>
+</body>
+
+<script>
+    //命名规范
+    //一个全小写,或者首字母大写
+    //多个单词,第一个字母大写(泛用,不过只能在脚手架才行)
+    //单词中间用 - 隔开
+
+    //组件名请避免已有的标签名,不要跟h2啊这类的搞混,而且也会报错.
+
+    // const school = Vue.extend({
+    //     name:'Wowwww',
+    //     // 这个name标签名仅仅在开发工具中显示,不影响正常使用
+    //     template: `<div>
+    //         <h2>学校: {{name}}</h2>
+    //         <h2>地址: {{address}}</h2>
+    //     </div>`,
+    //     data() {
+    //         return {
+    //             name: '格黑娜',
+    //             address: '基沃托斯北部'
+    //         }
+    //     },
+    // })
+
+    const school = {
+        name:'Wowwww',
+        // 这个name标签名仅仅在开发工具中显示,不影响正常使用
+        template: `<div>
+            <h2>学校: {{name}}</h2>
+            <h2>地址: {{address}}</h2>
+        </div>`,
+        data() {
+            return {
+                name: '格黑娜',
+                address: '基沃托斯北部'
+            }
+        },
+    }//这样是上面Vue.extend({})的简写
+    
+
+    new Vue({
+        el: '#root',
+        data: {
+            name: '空崎日奈',
+            age: '十七岁',
+        },
+        components:
+        {
+            'my-school':school
+        }
+    })
+</script>
+
+</html>

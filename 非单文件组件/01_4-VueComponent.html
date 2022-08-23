@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<body>
+<div id = 'root'>
+    <student></student>
+</div>
+</body>
+
+<script>
+
+const hello = {
+        template:`<div>
+        <h1>{{msg}}</h1>
+        </div>`,
+        data(){
+            return{
+                msg:'你好!'
+            }
+        }
+    }
+
+    const student = Vue.extend({//这个Vue.extend会帮忙生成VueComponent的构造函数,简写方法貌似不行?
+        //在些<student></student>的时候,Vue解析时会帮我们创建school组件的实例对象
+        //每次调用Vue.extend都返回全新的VueComponent(var会覆盖前一个?因为var = Sub,一堆函数,然后 return sub)
+
+        //this的指向问题,
+        //组件配置中:
+        //data函数,methods中函数,watch中函数,computed中函数,它们指向VueComponent实例对象
+        
+        //.new Vue(option)配置中:
+        //同上,但它们指向vm(Vue实例对象)
+
+        //以后VueComponent简称vc
+        
+        template: `<div><h2>名称: {{name}}</h2>
+            <h2>年龄: {{age}}</h2>
+            <hello></hello>
+            </div>`,
+        data() {
+            return {
+                name: '空崎日奈',
+                age: 16
+            }
+        },
+        components:{
+            hello
+        }
+    })
+    console.log('@',student);
+
+
+    vm = new Vue({
+        el: '#root',
+        data: {
+            msg: 'data信息'
+        },
+        components: {
+            student
+        }
+    })
+</script>
+</html>

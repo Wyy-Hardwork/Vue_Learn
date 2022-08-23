@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+
+<body>
+    <div id='root'>
+        <!-- <school></school>错误的,不能这样套娃
+        <hello></hello> -->
+        <app></app>
+    </div>
+</body>
+
+<script>
+    const school = {
+        template: `<div>
+            <h2>学校: {{name}}</h2>
+            <h2>地址: {{address}}</h2>
+        </div>`,
+        data() {
+            return {
+                name: '格黑娜',
+                address: '基沃托斯北部'
+            }
+        },
+    }
+
+    const student = {
+        template: `<div><h2>名称: {{name}}</h2>
+            <h2>年龄: {{age}}</h2>
+            <school></school>
+            </div>`,
+            //如上,应该这样套娃
+        data() {
+            return {
+                name: '空崎日奈',
+                age: 16
+            }
+        },
+        components:{
+            school
+        }
+    }
+
+    const hello = {
+        template:`<div>
+        <h1>{{msg}}</h1>
+        </div>`,
+        data(){
+            return{
+                msg:'你好!'
+            }
+        }
+    }
+
+    const app = {
+        template:`
+        <div>
+            <student></student>
+            <hello></hello>
+        </div>
+        `,
+        components:{
+            student,
+            hello
+        }
+    }
+
+    new Vue({
+        el: '#root',
+        data: {
+            msg: 'data信息'
+        },
+        components: {
+            app
+        }
+    })
+</script>
+
+</html>

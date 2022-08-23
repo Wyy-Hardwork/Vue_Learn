@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+
+<body>
+    <div id='root'>
+        <!-- <h2>名称: {{name}}</h2>
+        <h2>年龄: {{age}}</h2>
+        <hr>
+        <h2>学校名称: {{name}}</h2>
+        <h2>学校地址: {{adress}}</h2> -->
+
+        <!-- 便携组件标签 -->
+        <h2>{{msg}}</h2>
+        <school></school>
+        <hr>
+        <student></student>
+        <hr>
+        <student></student>
+        <xx></xx>
+    </div>
+
+    <div id="root2">
+        <xx></xx>
+    </div>
+</body>
+
+<script>
+    //组件,就是实现应用中 局部 功能 代码 和 资源 的集合
+    //为什么组件,方便复用,而且好管理
+    //三步走,定义组件,注册组件,使用组件
+    //注意局部和全局(components与component)
+    
+
+
+    //创建school组件
+    const student = Vue.extend({
+        // el: '#root',组件不能写el,因为组件是块砖,哪里需要哪里搬
+        //结果还需要写在new Vue之前,我还以为随处可调呢
+
+        template: `<div>
+            <h2>名称: {{name}}</h2>
+            <h2>年龄: {{age}}</h2>
+            <button @click='like'>喜欢谁?</button>
+            </div>`,//我感觉还有简单的写法
+        data() {//data如果是对象?因为指向同地址导致的连带,这里就要用方法来写data了
+            return {
+                name: '空崎日奈',
+                age: '十七岁'
+            }
+        },
+        methods:{
+            like(){
+                alert('老师!')
+            }
+        },
+    })
+
+    const xuexiao = Vue.extend({
+        template: `<div>
+            <h2>名称: {{name}}</h2>
+            <h2>年龄: {{address}}</h2>
+            </div>`,
+        data() {
+            return {
+                name: '格黑娜',
+                address: '基沃托斯南'
+            }
+        }
+
+    })
+
+    const hello = Vue.extend({
+        template: `<div>
+            <h2>名称: {{name}}</h2>
+            </div>`,
+        data() {
+            return {
+                name: '你好!',
+            }
+        }
+
+    })
+
+        //创建全局组件
+        Vue.component('xx',hello)//component没有s,依然要注意顺序
+
+    new Vue({
+        el: '#root',
+        data:{
+            msg:'你好!'
+        },
+        //局部注册
+        components: {
+            school: xuexiao,//可以简写
+            student//简写像这样(student:student名字统一)
+            //前变量名,后组件名,原写法'xx':x别忘了,这在全局组件上有体现
+        }
+    })
+    new Vue({
+        el: '#root2',
+    })
+</script>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<body>
+<div id = 'root'>
+    <student></student>
+    <!-- 这里就相当于new 了一个student,生成一个实例 -->
+    </div>
+</body>
+
+<script>
+    Vue.prototype.x = 99
+    //组件实例对象和普通vm的区别?  就el,data的区别
+    //另外有很多复用关系,没了
+
+    //原型链
+    //什么是构造函数,new一个对象就是构造函数
+    //var mc = new class();
+    //当函数以构造函数形式调用时,他所创建的对象中都会有一个隐含的属性,
+    //指向该构造函数的原型对象(class()是构造函数),我们可通过__proto__来访问
+
+    //别忘记我是构造函数function---VueComponent,也是有原型对象的
+    //还记得以前的vm.$mount吗,这些都是Vue原型上的方法(隐式原型上__proto__)
+    //实例对象上没有显性原型prototype,这玩意是构造函数上的东西
+
+    const student = Vue.extend({
+        //这里的student是prototype(VueComponent)
+        template: `<div><h2>名称: {{name}}</h2>
+            <h2>年龄: {{age}}</h2>
+            <button @click='test'>点我输出x,从student里出Vue的</button>
+            </div>`,
+        data() {
+            return {
+                name: '空崎日奈',
+                age: 16
+            }
+        },
+        methods:{
+            test() {
+                console.log(student.prototype.__proto__.x);//感觉我懂原型链了
+                console.log(this.x);//原型链上操作都可以省略,这样简写多好
+            }
+        }
+    })
+    console.log('@',student);
+
+    Vue.component('student',student)//就当复习下全局了,不能简写
+
+    vm = new Vue({
+        el: '#root',
+        data: {
+            msg: 'data信息'
+        },
+    })
+
+    //现在知道了两大原型对象,一个Vue的原型对象,一个VueComponent的原型对象
+    console.log(student.prototype.__proto__ === Vue.prototype);//student显示原型对象的隐式原型对象,指向了Vue的原型对象,
+    //而不是Object
+    console.log(vm.__proto__.__proto__);
+    //大的要来了
+
+    //VueComponent(student)的显式原型对象的__proto__没有直接指向Object,而是指向Vue的原型对象!
+    // 一路从VueComponent找到Vue
+    //你VueComponent访问不到那么多Vue原型好用的方法的话未免太可惜了
+
+    
+ 
+ 
+    //复习原型
+    // function play(){
+    //     const x = 9;
+    // }
+    // var test = new play();
+    // var test1 = new play();
+
+    // console.log(play);
+    // console.log(play.prototype);
+    // console.log(test.__proto__);
+    // console.log(play.prototype === test.__proto__ );
+    // console.log(test.__proto__ === test1.__proto__);
+    // play.prototype.a = 5//给原型对象赋值
+    // //play是一个function,隐藏了一个原型对象
+    // console.log(test.a);//有a从有的给,没有a从原型里面找
+</script>
+</html>
