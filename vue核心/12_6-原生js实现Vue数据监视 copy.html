@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<body>
+<div id = 'root'>
+    <!-- <h2>名称: {{name}}</h2>
+    <h2>年龄: {{age}}</h2> -->
+</div>
+</body>
+
+<script>
+    // const vm = new Vue({
+    //     el: '#root',
+    //     data:{
+    //     name : '空崎日奈',
+    //     age : '十七岁',//_data数据代理,每一组属性都会get,set
+    // }
+    // })
+
+        let data = {
+            name : '空崎日奈',
+            age:'北京',
+            play:{
+                a : '88'
+            }//vue里有递归,对象甚至数组也能检测到,并且给get,set(深拷贝?),这里演示一个对象,我功能没实现,拷贝不到
+            //不论你套娃多深,vue都能帮你找出来并实现实时更新,我这个就一层(浅拷贝?)
+        }
+        //创建一个监视的实例对象,用于监视data中属性变化
+        const obs = new Observer(data)//这里传的是实参data
+        console.log(obs);
+
+        //装备一个vm实例对象
+        let vm = {}
+        vm._data = data =obs
+
+        function Observer(obj){//形参obj
+            //汇总对象中所有属性,形成一个数组
+            const keys = Object.keys(obj) //keys遍历所有键名,生成一个数组集合
+            console.log(keys);
+
+            keys.forEach((k)=>{//foreach 值,序号;所有属性都被遍历.这里通过foreach拆分数组集合,方便操作
+                Object.defineProperty(this,k,{//defineProperty是读取数据的时候就会启用的,对象,属性名,{功能}
+                    get(){//上面的this是实例化的对象,不是data,是obj(这里的obj即将成为一个对象,数据代理?)
+                        return obj[k]//这个k看起来像数组索引,然而不是,作用相当于obj.属性名;真有你的
+                    },
+                    set(val){
+                        console.log(`${k}属性被改动了`);
+                        obj[k] = val
+                    }
+                })
+            })
+        }
+//new的时候发生了什么?
+// 首先会创建空的实例对象,用于开拓地址,这里var obs = {},给了自己一块新地址
+//通过this把值都复制过来
+//return自己的值给obs,obs获取所有属性
+</script>
+</html>

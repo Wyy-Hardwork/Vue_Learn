@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+
+<body>
+    <div id='root'>
+        <h2>名称: {{name}}</h2>
+        <h2>年龄: {{age}}</h2>
+        <button @click='addx'>点我添加性别</button>
+        <h2 v-if="like.gender">性别: {{like.gender}}</h2>
+        <hr />
+        <h2>奇怪的嗜好a: {{like.sex}}</h2>
+        <h2>跟老师喜欢: {{like.toy.sensei}} 跟同学喜欢: {{like.toy.girls}}</h2>
+        <hr>
+        <h2>朋友们</h2>
+        <ul>
+            <li v-for = '(f,index) in friends' :key="index">
+                {{f.name}}--
+                {{f.age}}
+            </li>
+        </ul>
+        <ul>
+            <li v-for = '(x,index) in love' :key="index">
+                {{x}}--
+            </li>
+        </ul>
+    </div>
+</body>
+
+<script>
+    //想要响应式数组,需要用push,unshift,pop,shift,splice,sort,reverse等方法
+    //采用了包装的方法,从原型链上获取了这些方法
+
+    //移除数组的第三个元素，并在数组第三个位置添加新元素:
+    //var fruits = ["Banana", "Orange", "Apple", "Mango"];
+    //fruits.splice(2,1,"Lemon","Kiwi"); 
+    //Banana,Orange,Lemon,Kiwi,Mango  --log
+
+    //还有一种办法 Vue.set(vm._data.love,1(索引),'9'(要改的值))
+// fruits.splice(2,1,"Lemon","Kiwi"); 
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            name: '空崎日奈',
+            age: '十七岁',
+            like: {
+                sex: '和老师love',
+                toy: {
+                    sensei: '金金',
+                    girls: '小豆豆'
+                }
+            },
+            friends: [
+                { name: '下江小春', age: 16 },
+                { name: '阿慈古日富美', age: 17 },
+                { name: '白洲梓', age: 17 },
+            ],
+            love : ['a','b','c']
+        },
+        methods: {
+                addx(){
+                    Vue.set(this.like,'gender','女')
+                }
+            },
+    })
+</script>
+
+</html>

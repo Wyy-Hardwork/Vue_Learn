@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function tong(play){
+        console.log('我是'+play);
+    }
+
+    function yi(play,play1){
+        setTimeout(() => {
+            this.play = '我是'+play+',我作为字符串被当做结果输出了!';
+            console.log(this.play);
+            play1('异步2')
+        }, 1000);
+    }
+//回调函数,就是在自己函数内先定好形参参数,等待别的方法入驻;别的入驻方法入驻后直接套用这个形参.
+//(入驻函数通过被入驻函数的形参入驻,在调用时报上自己的方法名来替代形参就好.)
+
+//回调函数用的时候只写名字不写参数(形参)括号
+//这玩意里面会有人想办法把参数给你塞进去的
+    tong('同步1')
+    yi('异步1',tong)
+</script>
+</html>

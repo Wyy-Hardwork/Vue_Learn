@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<body>
+<div id = 'root'>
+    <ul>
+        <li v-for="(v,id) in persons" :key='v.id'>
+            <!-- v象征着所有数组,它会遍历所有索引,意思是你的操作会同时反馈给v[1],v[2]...而你只要改v -->
+            {{v.id}}-
+            {{v.name}}-
+            {{v.age}}-
+            {{v.sex}}
+        </li>
+    </ul>
+    <button @click = 'update'>更新马冬梅</button>
+</div>
+</body>
+
+<script>
+        const vm = new Vue({
+        el: '#root', 
+        data:{
+        persons:[//数组
+            {id:'001',name:'马冬梅',age:18,sex:'女'},//数组内,单个检索多个数据,可以用花括号
+            {id:'002',name:'周冬雨',age:20,sex:'女'},
+            {id:'003',name:'周杰伦',age:29,sex:'男'},
+            {id:'004',name:'温兆伦',age:23,sex:'男'},
+        ],
+    },
+    methods:{
+       update(){
+        // this.persons[0].name = '马老师'//有效更改,实时更新
+        this.persons[0] = {id:'008',name:'马梅',age:18,sex:'男'}//vue检测不到,不会实时更改,但vm接收到了
+       }
+    }
+})
+</script>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<style>
+    [v-cloak]{
+        display: none;
+    }
+    /* 属性选择器,[]用于全局影响标签 */
+</style>
+<body>
+<div id = 'root'>
+    <h2>名称: {{name}}</h2>
+    <h2 v-text="age"></h2>
+    <h2 v-html="age"></h2>
+    <h2 v-cloak="age"></h2>
+    <!-- 网太慢导致样式或者方法加载不出来,给我显示一个插值语法在那里,很难看(模板未被解析) -->
+    <!-- 我就可以用v-cloak来隐藏这个因为网慢显示的插值语法,Vue一旦生效,就会把v-cloak移除,东西就会从隐藏到显示了 -->
+    <!-- 比起难看的,还是隐藏起来好一点 -->
+</div>
+</body>
+
+<script>
+    new Vue({
+        el: '#root',
+        data:{
+        name : '空崎日奈',
+        age : '<h3>十七岁</h3>',//v-html可以解析标签;text不可以,只读文本
+    }
+    })
+</script>
+</html>

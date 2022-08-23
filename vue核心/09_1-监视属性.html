@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<body>
+<div id = 'root'>
+    <h2>{{name}} {{isHot? '喜欢':'不喜欢'}}   为师!</h2>
+    <h2>{{name}} {{info}}   为师!</h2>
+    <button @click="change">喜不喜欢我!</button>
+    <button @click="isHot = !isHot">喜不喜欢我!</button>
+    <!-- @绑定事件后面可以写一些简单的语句 -->
+</div>
+</body>
+
+<script>
+    const vm =new Vue({
+        el: '#root',
+        data:{
+        name : '空崎日奈',
+        isHot:true
+    },
+    computed: {
+        info(){
+            return this.isHot? '喜欢':'不喜欢'
+        }
+    },
+    methods: {
+        change(){
+            this.isHot = !this.isHot
+        }
+    },
+    watch: {
+        isHot:{
+            immediate:true,//初始化时让handler调用一下
+            handler(newValue,oldValue){//新值和旧值的监视器,被监视属性变化就会调用
+                console.log('isHot修改了!'+oldValue+'修改成了'+newValue);
+            },
+        }
+    },
+    })
+
+    //外部定义监视器,效果一样
+    vm.$watch('我不存在!!',{//监视不存在的东西时,不会报错,但有俩undefined!
+        immediate:true,//初始化时让handler调用一下
+            handler(newValue,oldValue){//新值和旧值的监视器
+                console.log('isHot修改了!'+oldValue+'修改成了'+newValue);
+            },
+    })
+</script>
+</html>

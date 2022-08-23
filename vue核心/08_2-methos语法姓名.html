@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<body>
+<div id = 'root'>
+    姓:<input type="text"   v-model="na"> </input><br>
+    名:<input type="text"   v-model="nb"> </input><br>
+    <span>姓名: {{na}}-{{nb}}</span><br>
+    <span>姓名: {{fullName()}}</span><br>
+    <!-- fullName是方法,每次改动导致参数变化时,方法都会执行一次 -->
+    <button @click="fullName()">点我</button>
+</div>
+</body>
+
+<script>
+    new Vue({
+        el: '#root',
+        data:{
+        na : '空崎',
+        nb : '日奈',
+        // name : ''
+    },
+    methods:{
+        fullName(){
+            console.log('参数变化,方法也变化!');
+            return this.na +' - '+this.nb
+        }
+    }
+    })
+</script>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<body>
+<div id = 'root'>
+    <h2>名称: {{name}}</h2>
+    <h2>年龄: {{age}}</h2>
+</div>
+</body>
+
+<script>
+    const vm = new Vue({
+        el: '#root',
+        data:{
+        name : '空崎日奈',
+        age : '十七岁',//_data数据代理,每一组属性都会get,set
+    }
+    })
+
+    //基础类型 = 赋值,是值的赋值
+    //对象类型(如数组) = 赋值,是内存地址的复制,各种名字在栈内有个自己的地址,
+    // 如果它们指向的堆地址(保存对象内容的地方)相同,那么内容也就相同了(多对一)
+    
+    // 如 let ob = {
+    //     name : '发生',
+    // } 
+    // let ob1 = ob;//栈内地址赋值
+    // ob.name = '发生1'
+    // console.log(ob1.name); ==>输出 发生 而 非 发生1
+
+    //那既然这样拷贝的是变量名,那怎样才能拷贝对象内容呢?
+    
+    // 让ob1 = {}自己创建个新对象,这样就有新的对象地址了
+    // 然后让
+    // ob1 for(let key in ob){ 遍历属性给属性加下标,遍历子对象给子对象加下标
+    //     ob1[key] = ob[key]
+    // }遍历一遍内容,这样就算复制完成了
+
+    // es6只需要 let ob1 = {...ob}就可以复制成功了,{...ob}作用是开辟新的对象堆内存地址,并且复制ob值过来
+
+        //↑拷贝第一层,浅拷贝,无法波及第二层
+        //↓拷贝更深层,深拷贝
+        // let a = ['a','b',['c']],这里的c数组是个语法糖,c所在数组开辟了一块新的对象内存空间
+        // let b = [...a],这里首先b开辟了一个新的对象内容地址,然后把a值复制过来,不过c还是在自己的堆地址内
+        //a[2].push('d'),这里就会把d加进['c','d']这块堆对象内存里面
+</script>
+</html>

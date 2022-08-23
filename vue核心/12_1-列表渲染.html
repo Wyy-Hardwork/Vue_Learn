@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<body>
+<div id = 'root'>
+    <h2>名称: {{name}}</h2>
+    <button @click="enen">点我看看不加this</button>
+    <ul>
+        <li v-for="(v,index) in persons" :key='v.index'>
+            {{v.id}}-
+            {{v.name}}-
+            {{v.age}}-
+            {{index}}<!--索引index-->
+        </li>
+        <!-- for-in功能类似,用模板语法 -->
+        <!-- :key在用for-in时候用,可以标识数组数据,唯一标识 -->
+    </ul>
+
+    <ul>
+        <li v-for="(data,key) in car" :key='key'>
+            <!-- data在前是因为平时优先遍历值而不是名字 -->
+            {{key}}---{{data}}
+            <!-- 前值后键 -->
+        </li>
+    </ul>
+
+    <ul>
+        <li v-for="(characters,index) in string" :key="index">
+            {{characters}}--{{index}}
+        </li>
+        <!-- 字符串遍历,少用;也能遍历数字,in改of后面写个阿拉伯数字就行,从1开始 -->
+    </ul>
+</div>
+</body>
+
+<script>
+    new Vue({
+        el: '#root',
+        data:{
+        name : '空崎日奈',
+        persons:[//数组
+            {id:'001',name:'安慈谷富美',age:18},//数组内,单个检索多个数据,可以用花括号
+            {id:'002',name:'下江小春',age:18},
+            {id:'003',name:'白洲梓',age:18},
+        ],
+        car:{//对象
+            name:'虎式',
+            price:'70w',
+            color:'灰色'
+        },
+        string:'abcdef'
+    },
+    methods: {
+        enen(){
+            console.log(this.name)
+        }
+    },
+    })
+</script>
+</html>

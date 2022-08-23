@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+
+<body>
+    <div id='root'>
+        <h2>名称: {{name}}</h2>
+        <h2>年龄: {{age}}</h2>
+        <input type="text" placeholder="按下回车提示输入" @keyup.enter="showInfo">
+        <!-- .enter是回车检测,功能和下面showInfo一样的 -->
+        <!-- Vue常用按键名称
+        enter huiche
+        删除 delete,捕获删除 退格
+        退出 esc
+        空格 space
+        换行 tab 配合keydown好用一点(ctrl shift alt之类的都这样)
+        上下左右 up,down,left,right -->
+
+        <!-- 绑定可以实现复合键,eg. @keyup.ctrl.x = 'showInfo',点击ctrl和x才能触发 -->
+    </div>
+</body>
+
+<script>
+    new Vue({
+        el: '#root',
+        data: {
+            name: '空崎日奈',
+            age: '十七岁',
+        },
+        methods: {
+            
+            showInfo(e) {
+                // if(e.keyCode !==13) 
+                // return
+                //程序执行的过程中，如果遇到return,则立即停止执行
+                //（即 return 语句后面的那些程序代码都不再执行了！）
+                console.log(e.target.value);
+            }
+        }
+    })
+</script>
+
+</html>

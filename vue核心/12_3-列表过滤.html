@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<body>
+<div id = 'root'>
+    <ul>
+        <li v-for="(v,index) in filPersons" :key='v.index'>
+            <!-- v遍历单个对象内所有属性,但你不一定需要所有属性,可以通过v.属性名来调用;不打属性名全输出-->
+            {{v.id}}-
+            {{v.name}}-
+            {{v.age}}-
+            {{v.sex}}-
+            {{index}}<!--索引index-->
+            {{v}}
+        </li>
+    </ul>
+    <input type="text" placeholder="请输入名字" v-model="keyWord">
+</div>
+</body>
+
+<script>
+    //#region 监视器输入实现
+    // new Vue({
+    //     el: '#root',
+    //     data:{
+    //     name : '空崎日奈',
+    //     keyWord:'',//双向实时收集用户输入
+    //     persons:[//数组
+    //         {id:'001',name:'马冬梅',age:18,sex:'女'},//数组内,单个检索多个数据,可以用花括号
+    //         {id:'002',name:'周冬雨',age:20,sex:'女'},
+    //         {id:'003',name:'周杰伦',age:21,sex:'男'},
+    //         {id:'004',name:'温兆伦',age:21,sex:'男'},
+    //     ],
+    //     filPersons:[//这里替换了for-in的persons,是因为这里要成为战场了
+
+    //     ]
+    // },
+    // watch:{
+    //     keyWord:{
+    //         immediate:true,//自动执行一次handler,输入了空值,索引为0都符合
+    //         handler(a){
+    //         //在filter加入一个方法,用于给数组每个成员加条件,方便return
+    //         this.filPersons = this.persons.filter((v)=>{//括号内加入带索引数组名
+    //             return v.name.indexOf(a) !==-1 //indexOf包含,返回当前索引,空也返回0,第一个也返回0;不包含,返回-1
+    //             })
+    //         }
+    //     }
+    // }
+    // })
+    //#endregion
+
+    //computed实现
+        new Vue({
+        el: '#root', 
+        data:{
+        keyWord:'',//双向实时收集用户输入
+        persons:[//数组
+            {id:'001',name:'马冬梅',age:18,sex:'女'},//数组内,单个检索多个数据,可以用花括号
+            {id:'002',name:'周冬雨',age:20,sex:'女'},
+            {id:'003',name:'周杰伦',age:21,sex:'男'},
+            {id:'004',name:'温兆伦',age:23,sex:'男'},
+        ],
+    },
+    computed: {//conputed要值记得一定要返回呀,
+        filPersons(){//这里方法return了个数组,本来是个对象的,简写成了get获取了数组
+            return this.persons.filter((x)=>{//filter创建新的符合条件数组,原数组不受影响
+                console.log(x);
+                return x.name.indexOf(this.keyWord) !== -1//filter要求return
+                //另外filter括号里的形参就代表指向的那个数组的复制体,这里是this.persons的复制体,因此原数组不受影响(数组来自__ob__)
+            })
+        }
+    },
+})
+</script>
+</html>

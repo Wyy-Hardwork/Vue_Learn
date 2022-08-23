@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'>
+        
+    </script>
+    <!-- 想让Vue工作,必须创建一个Vue实例,并且传入一个配置对象 -->
+    <!-- 注意区分js表达式和js代码,都可以写进{{}}
+    表达式: 会生成一个值 a;a+b;demo(1) 都可以用const x=接住 
+    
+    js代码(语句) : if(){}  for(){}-->
+
+    <script>Vue.config.productionTip = false</script>
+    <script>
+        //创建vue实例
+        // const x =  (都不用定义变量了,多余 )
+        new Vue({
+            el:'#root',//el指定当前Vue实例为哪个容器服务,通常是css选择器
+            // el:document.getElementById(root)可以用,明显没必要
+            data:{ //data中用于存储数据,根据el指定容器定位
+                name : '空崎日奈',
+                age:'17'
+            }
+        })
+        //容器(div)和实例一一对应,.class失去意义了,多用id吧 --以后用组件
+    </script>
+</head>
+
+<body>  
+    <div id="root"><h1>开始吧Vue</h1>
+    <h2>{{name.toUpperCase()}}</h2>
+        <h2>{{age}}</h2>
+</div>
+</body>
+</html>

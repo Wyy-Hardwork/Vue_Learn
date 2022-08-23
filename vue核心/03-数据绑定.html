@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<body>
+<div id="root">
+    单向数据绑定<input type = 'text' :value="name"><br>
+
+    双向数据绑定<input type = 'text' v-model="name">
+    <!-- 改变源码值,name会被同步改变,改一个name也跟着改一个 -->
+    <!-- v-mode:value 可以简写成 v-model -->
+    <!-- 双向数据绑定<input type = 'text' v-model:value="name"> -->
+    <!-- v-model只能在 表单(输入类,必须有value值,这里的就是对象属性) 类元素上使用 -->
+</div>
+</body>
+
+<script>
+    new Vue({
+        el:'#root',
+        data:{
+            name:'空崎日奈',
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+
+<body>
+    <div id='root'>
+        <h2 :style="{opacity:opacity}">名称: {{name}}</h2>
+        <!-- 动态绑定样式记得给冒号 :style -->
+        <!-- 另外如果标签名和data内属性名相同,那么其实后面的:opacity可以省略,这里没省略 -->
+    </div>
+</body>
+
+<script>
+    //生命周期,又名生命周期回调函数(不调用方法却发挥作用,叫回调方法),生命周期函数,生命周期钩子
+    //生命周期函数this指向Vue(vm)
+    new Vue({
+        el: '#root',
+        data: {
+            name: '空崎日奈',
+            opacity: 1,
+        },
+        methods: { 
+
+        },
+        mounted() {//挂载;解析成虚拟DOM->真实DOM->真实DOM放入页面(Vue完成模板解析并把真实DOM元素放入页面后调入mounte)
+            //mounted叫挂载完毕
+            setInterval(() => {
+                    this.opacity -= 0.01;
+                    if (this.opacity <= 0)
+                        this.opacity = 1
+                }, 16)//这里就避免了在methods直接使用导致的死循环(模板数据变动导致的多次调用循环函数)
+        },
+    })
+
+
+    //外部定时器实现(不推荐)
+    // setInterval(()=>{
+    //     vm.opacity -=0.01;
+    //     if(vm.opacity <= 0)
+    //      vm.opacity = 1
+    // },16)
+</script>
+
+</html>

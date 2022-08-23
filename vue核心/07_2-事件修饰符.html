@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<style>
+    .stop{
+        background-color: aquamarine;
+    }
+</style>
+<body>
+<div id = 'root'>
+    <h2>名称: {{name}}</h2>
+    <h2>年龄: {{age}}</h2>
+    <a href="http://www.baidu.com" @click.prevent="showInfo">我不跳转,因为阻止默认事件了</a>
+    <!-- 先提示,后跳转,提示是默认行为,可通过event内方法禁用(下面);也可以在click上写prevent阻止 -->
+    <!-- 阻止默认事件发生 -->
+
+    <div @click="showInfo2" style="background-color: skyblue;">
+        <button class="stop" @click.stop="showInfo">点我阻止事件冒泡</button>
+        <!-- stop放在子标签内,这里执行完该标签后不再继续执行div;这里先执行了button -->
+    </div>
+
+    <div>
+        <button @click.once="showInfo">一次性按钮once</button>
+        <!-- once一次性用品 -->
+    </div>
+
+    <div style="background-color: aqua;height: 300px;margin-top: 20px;" @click.capture="showInfo">
+        <div style="background-color:wheat;height: 100px;margin: 20px;" @click="showInfo2"></div>
+    </div>
+    <!-- 捕获由外而内,冒泡由内而外,capture将在你捕获阶段就直接执行 -->
+
+    <!-- self防止穿透到自己身上;在被穿透时不做反应(我是div,里面一个button;点击按钮不会波及到div) -->
+
+    <!-- passive可以实现事件同步操作(默认事件立即发生),wheel滚轮事件就有个先后顺序,不过有点鸡肋 -->
+
+
+    <!-- 说说Vue中的事件修饰符 @
+    prevent 阻止默认事件
+    stop 阻止事件冒泡
+    once 事件只触发一次
+    ----------------------------------------------------------------
+    capture 使用事件的捕获模式
+    self 只有event.target是当前操作的元素时候,才能触发事件
+    passive 事件的默认行为立即执行,无需等待事件回调完毕 -->
+
+    <!-- 另外时间修饰符是可以连用的,eg. @click.stop.prevent = 'showInfo' 还是有先后顺序,不过效果一样     -->
+</div>
+</body>
+
+<script>
+    new Vue({
+        el: '#root',
+        data:{
+        name : '空崎日奈',
+        age : '十七岁',
+    },
+    methods:{
+        showInfo(e){
+            // e.preventDefault();
+            alert('老师!')
+        },
+
+        showInfo2(e){
+            alert('老师2!')
+        },
+    }
+    })
+</script>
+</html>

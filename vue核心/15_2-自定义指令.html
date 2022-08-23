@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<body>
+<div id = 'root'>
+    <h2><span v-text="n">年龄: {{age}}</span></h2>
+    <h2 v-big="n"></h2>
+    <button @click="n++">点我+1</button>
+    <hr>
+    <input type="text" v-fbind:value="n" style="background-color: aqua;">
+</div>
+</body>
+
+
+<script>
+    //还有个全局的自定义命名
+    //Vue.directive(指令名,回调函数)看清楚了,directive没有s,vue实例内才有!
+
+    new Vue({
+        el: '#root',
+        data:{
+        name : '空崎日奈',
+        age : '十七岁',
+        n:1+5
+    },
+    directives:{//自定义指令回调函数,this都是指向window
+        big(element,binding){//前者给出标签用于DOM操作,后者给出对象(有很多值)
+            element.innerText = binding.value * 10
+
+        },
+
+        //方法命名大小写不敏感,可以尝试 v-xxx-xxxx,但是下面对象名要改成'v-xxx-xxxx'(){},尽量别驼峰了
+        //这么写是通过原型'a':function(){}这个完整写法改过来的
+
+        fbind:{//
+            bind(e,b){
+                console.log('绑定时刻!');
+                e.value = b.value
+                
+            },
+            inserted(e,b){//this指向window
+                console.log('指令所在元素插入页面时刻!');
+                e.focus()
+            },
+            update(e,b){
+                console.log('指令所在模板被重新解析时刻!');
+                e.value = b.value
+                e.focus()
+                console.log(this);
+
+            }
+        }
+    }
+    })
+</script>
+</html>

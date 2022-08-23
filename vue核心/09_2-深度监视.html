@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+
+<body>
+    <div id='root'>
+        <h2>{{name}} {{isHot? '喜欢':'不喜欢'}} 为师!</h2>
+        <h2>{{name}} {{info}} 为师!</h2>
+        <h2>a的值为: {{numbers.a}}</h2>
+        <button @click="change">喜不喜欢我!</button>
+        <button @click="numbers.a++">点我a+1!</button>
+        <button @click="numbers.b++">点我a+1!</button>
+    </div>
+</body>
+
+<script>
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            name: '空崎日奈',
+            isHot: true,
+            numbers: {
+                a: 1,
+                b: 1
+            }
+        },
+        computed: {
+            info() {
+                return this.isHot ? '喜欢' : '不喜欢'
+            }
+        },
+        methods: {
+            change() {
+                this.isHot = !this.isHot
+            }
+        },
+        watch: {//只能监视,并且面对多级结构(只能一层)需要deep的帮助
+            isHot: {
+                // immediate:true,
+                handler(newValue, oldValue) {
+                    console.log('isHot修改了!' + oldValue + '修改成了' + newValue);
+                },
+            },
+            'numbers.a': {//其中之一键值对属性要打点
+                handler() {
+                    console.log('numbers.a修改了!');
+                },
+            },
+            'numbers.b': {//其中之一键值对属性要打点
+                handler() {
+                    console.log('numbers.b修改了!');
+                },
+            },
+            numbers: {//只在对象上是检测不到a,b变化的(地址没有改变),所以我们需要deep深入
+                deep:true,//监视多级结构中所有属性的变化
+                handler() {
+                    console.log('numbers内修改了!');
+                },
+            },
+        },
+    })
+</script>
+
+</html>

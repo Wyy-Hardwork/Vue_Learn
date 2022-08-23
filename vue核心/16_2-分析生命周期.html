@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+
+<body>
+    <div id='root'>
+        <h2>名称: {{name}}</h2>
+        <h2>年龄: {{age}}</h2>
+        <button @click="add">点我加一岁</button>
+        <button @click="bye">再见了Vue</button>
+    </div>
+</body>
+
+<script>
+    new Vue({
+        el: '#root',
+        data: {
+            name: '空崎日奈',
+            age: 17,
+            x: 1,
+            template: `<div>可以写些标签上的东西,可以用来被Vue解析;注意写个div,因为有规定,必须限制在一个容器内</div>`
+            //通过template属性写的标签,会完全替换原标签?
+            //不能用template标签作为根标签,注意是标签,和上面不一样
+        },
+        methods: {
+            add() {
+                this.age = this.age + 1
+            },
+
+            // 销毁流程
+            bye() {//名字自拟
+                console.log('销毁!');
+                this.$destroy()
+                //没有人管理vm了,已经出现在页面的没变,Vue里面root都没了
+                //清理它与其他实例的连接(组件),并解绑它的全部指令以及事件监听器(是自定义事件,原生依然奏效!)
+            }
+        },
+        watch:{//为了销毁而出现的watch
+            age(){//注意监视的写法是把属性名写成方法名
+                console.log('age变了!');
+            }
+        },
+        // 1.初始化生命周期和事件,但数据代理还没开始
+
+        beforeCreate() {//2.此时,无法通过vm访问到data里的数据,methods里的方法
+            console.log('beforeCreate');
+            // debugger//这个命令是中止生命周期的,用于调试
+        },
+        // 3.初始化数据监测,数据代理
+
+        created() {//4.此时,可以通过vm访问到data里的数据,methods里的方法
+            console.log('created');//这以后,get,set,方法,数据都获得了
+        },
+
+        //5.这一步会判断el,判断el时候,开始解析模板,生成虚拟DOM(内存中).这时候还不会显示解析好的在页面上(没el就没下文了)
+        //--但是你可以通过vm.$mount('#root')来绑定有需求的标签id,来继续el下文
+        //关于el涵盖(可操作)范围,上面那个div标签也包含在内
+
+        beforeMount() {//6.挂载前,此时所有对DOM的操作,'最终都'不奏效(控制台改个innerHTML,会临时有效,结果还是会失效的,相当于没操作DOM)
+            console.log('beforeMount');
+        },
+
+        //这步以后,创建vm.$el备份一份,还会往el给一份 ,即虚拟DOM转换为真实DOM插入页面(不如说给覆盖一份了,beforeMount DOM操作因此全失效)
+
+        mounted() {
+            //呈现经过Vue编译的DOM
+            //可操作DOM,但没必要,你在其他地方操作好不就行了?只不过这里可以改而已(都用Vue了还操作什么DOM)
+            // document.querySelector('h2').innerHTML = 999
+            console.log('mounted');
+        },//7.至此,初始化过程结束.一般在此时进行:
+        //开启定时器,发送网络请求,订阅消息,绑定自定义事件 等初始化操作
+
+        //至此,挂载流程结束啦
+
+        //开启更新流程
+        beforeUpdate() {
+            console.log('beforeupdate');
+            console.log(this.age);
+            //8.debugger 此时debugger,控制台已经改变了,但页面还没有改变(数据新,页面旧)
+            //接着,根据新的数据生成虚拟DOM,随后与旧的虚拟DOM进行比较,最终完成页面更新(即 Model->View的更新)
+        },
+        updated() {
+            console.log('updated');
+            console.log(this.age);//更新过的数据,页面也有显示;并且会新旧对比,相同就不会进入死循环
+            // debugger
+        },
+        beforeDestroy() {
+            console.log('beforedestroy');
+            this.age = 999 //已经进入销毁流程了,调能调,修改不再会触发更新页面
+            console.log('销毁前年龄'+this.age);
+            debugger
+        },
+        destroyed() {
+          console.log('destroyed!都结束了');  //结束了,但这东西没啥营养
+        },
+    })
+</script>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<body>
+<div id = 'root'>
+    <h2>名称: {{name}}</h2>
+    <ul>
+        <li v-for="(v,index) in persons" :key='v.id'>
+            <!-- 面对key,是用index还是id ?
+
+            index是无脑从上到下来排序(虚拟DOM),这样可能导致真实DOM不匹配(从上到下0,1,2,3...)!
+            本体属性就有的id就不会犯错,因为唯一标识不是自动生成的,所以真实DOM可以匹配到,不会乱序!
+            如果不写index,帮你自动补一个index
+            -->
+
+            <!-- key是虚拟DOM对象的标识,当数据变化,Vue会根据 新数据 生成 新的虚拟DOM,随后Vue进行
+            新虚拟DOM 和 旧虚拟DOM 的差异比较 -->
+
+            <!--旧虚拟DOM中找到了与新虚拟DOM相同的key
+                若虚拟DOM内容没变,则直接使用之前的真实DOM(输入框text的对比)
+                若虚拟DOM内容变了,则生成新的真实DOM,随后替换页面中之前的真实DOM
+            -->
+
+            <!-- index导致序号打乱全重组的话,导致了效率低的问题;
+            并且如果有输入类的DOM,就会导致DOM错位 -->
+
+
+            <!-- 总之,有唯一标识用唯一标识; -->
+            {{v.name}}-
+            {{v.age}}-
+            {{index}}<!--索引index-->
+            <input type='text'>
+        </li>
+    </ul>
+    <button @click.once = 'add'>添加新学生</button>
+</div>
+</body>
+
+<script>
+    new Vue({
+        el: '#root',
+        data:{
+        name : '空崎日奈',
+        persons:[//数组
+            {id:'001',name:'安慈谷富美',age:18},//数组内,单个检索多个数据,可以用花括号
+            {id:'002',name:'下江小春',age:18},
+            {id:'003',name:'白洲梓',age:17},
+        ],
+    },
+    methods:{
+        add(){
+            const p = {id:'004',name:'枣伊吕波',age:17}
+            this.persons.unshift(p)
+        }
+    }
+    })
+</script>
+</html>

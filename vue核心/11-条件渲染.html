@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+
+<body>
+    <div id='root'>
+        <h2 v-show="true">名称: {{name}}</h2>
+        <!-- 隐藏会让自己的box也消失,但不会让代码消失,display:none? -->
+
+        <h2 v-show="a">名称属性: {{name}}</h2>
+        <!-- 属性来判断 -->
+
+        <h2 v-show='1===1'>名称逻辑判断: {{name}}</h2>
+        <!-- 逻辑判断 -->
+
+        <h2 v-show="true">名称if: {{name}}</h2>
+        <!-- if判断,让该行标签代码直接消失,既然DOM里没有了后面肯定也操作不了了 -->
+        <!-- 高频v-show,低频v-if  -->
+
+        <!-- v-if , v-else-if , v-else ,你懂得,另外这几个得连着用,不然就打断了(if开始,elseif中途,else兜底) -->
+
+        <template v-if="a == true">
+            <h2>日奈</h2>
+            <h2>日富美</h2>
+            <h2>小春</h2>
+        </template>
+        <!-- template不会破坏目前已有结构,但是可以用来包标签以方便实现功能 -->
+        <!-- template只能搭配v-if,不可以搭配v-show -->
+    </div>
+</body>
+
+<script>
+    new Vue({
+        el: '#root',
+        data: {
+            name: '空崎日奈',
+            a: true,//v-show,
+        }
+    })
+</script>
+
+</html>

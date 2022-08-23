@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+
+<body>
+    <div id='root'>
+        <h2>名称: {{name}}</h2>
+        <h2>年龄: {{age}}</h2>
+        <hr />
+        <h2>奇怪的嗜好a: {{like.sex}}</h2>
+        <h2>跟老师喜欢: {{like.toy.sensei}} 跟同学喜欢: {{like.toy.girls}}</h2>
+        <h2 v-if='like.gender'>年龄: {{like.gender}}</h2>
+
+        <hr>
+        <h2>朋友们</h2>
+        <ul>
+            <li v-for = '(f,index) in friends' :key="index">
+                {{f.name}}--
+                {{f.age}}
+            </li>
+        </ul>
+        <hr>
+        <h2>{{love}}</h2>
+    <button @click = 'age++'>点我加一岁</button>
+    <button @click = 'gen'>点我出性别</button>
+    <button @click = 'add'>点我多一个朋友</button>
+    <button @click = 'change'>点我修改小春名字</button>
+    <button @click = 'lovechange'>点我修改数组</button>
+    </div>
+</body>
+
+<script>
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            name: '空崎日奈',
+            age: 17,
+            like: {
+                sex: '和老师love',
+                toy: {
+                    sensei: '金金',
+                    girls: '小豆豆'
+                }
+            },
+            friends: [
+                { name: '下江小春', age: 16 },
+                { name: '阿慈古日富美', age: 17 },
+                { name: '白洲梓', age: 17 },
+            ],
+            love : ['a','b','c']
+        },
+        methods: {
+            gen(){
+                Vue.set(this.like,'gender','女')
+            },
+            add(){
+                this.friends.unshift({name:'砂狼白子',age:16})//数组对象直接加就行,不需要包裹,直接能响应式
+            },
+            change(){
+                this.friends[0].name = '下流小春'//修改直接修改就行,不需要包裹
+            },
+            lovechange(){
+                vm.$set(this.love,1,'第二个')
+                //this.love(1,1,'第二个')
+            }
+            //数组按splice改,或者包裹
+            },
+
+    })
+
+    //Vue会监视data中所有的数据(get,set)
+    //通过setter实现监视,且要在new Vue时就传入要监视的数据
+    //如果需给后续属性做响应式,要用到API Vue.set或者vm,$set
+
+    //当用到filter还想改变数组时候,可以替换掉原数组,新的也还是响应式
+
+    //这俩api不能用在data上,得在子对象里,或者数组
+
+    //什么是数据劫持?给用到的属性加上get,set(通过objectProperty)来实现模板更新(响应式页面)
+</script>
+
+</html>

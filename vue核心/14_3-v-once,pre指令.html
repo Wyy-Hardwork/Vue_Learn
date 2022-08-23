@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<style>
+    [v-cloak]{
+        display: none;
+    }
+    /* 属性选择器,[]用于全局影响标签 */
+</style>
+<body>
+<div id = 'root'>
+    <h2>名称: {{name}}</h2>
+    <h2 v-text="age"></h2>
+    <h2 v-html="age"></h2>
+    <h2 v-cloak="age"></h2>
+    <h2 v-once>初始化n值是: {{n}}</h2>
+    <!-- 看起来不会被连带执行,初次动态渲染({{我就是动态渲染}})后就变成静态属性了.(第一次读的时候),优化性能 -->
+    <h2>当前n值是: {{n}}</h2>
+    <h2 v-pre>当前n值是(加了v-pre): {{n}}</h2>
+    <!-- 跳过编译,作用比较小 -->
+    <button @click="n++">点我n+1</button>
+</div>
+</body>
+
+<script>
+    new Vue({
+        el: '#root',
+        data:{
+        name : '空崎日奈',
+        age : '<h3>十七岁</h3>',
+        n:1
+    }
+    })
+</script>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+
+<body>
+
+</body>
+
+<script>
+    let person = {
+        name: '刻晴',
+        gender: 'male',
+    }
+    let number = 18
+
+    Object.defineProperty(person,'age', {
+        // value: 18,
+        //这个属性不参与遍历,无法被枚举,也无法后续修改,怎么办呢?
+
+        // enumberable:true,//枚举可能,默认false
+        // writable:true,//修改可能
+        // configurable:true,//属性是否可以被删除
+
+        get:function(){//修改age属性时,getter就会被调用,且返回值return是age
+            console.log('读取age属性');
+            return number//get用于实现属性同步,读,并返回.
+        },
+
+        set(value){//上面的get也可以这么简写
+            //修改age属性时,setter就会被调用,且会收到修改的具体值,这里收到了value
+            console.log('age值被修改,为',value);//检测
+            number = value//改
+        }
+    })
+
+    console.log(person);
+    for (let i in person) {
+        console.log(i);
+    }
+</script>
+
+</html>

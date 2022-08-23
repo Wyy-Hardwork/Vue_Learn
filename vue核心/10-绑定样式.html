@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<style>
+    .happy {
+        background-color: aquamarine;
+    }
+
+    .sad {
+        background-color: grey;
+    }
+
+    .normal {
+        background-color: rgb(48, 83, 148);
+    }
+
+    .fan1 {
+        font-size: 60px;
+    }
+
+    .fan2 {
+        border-radius: 15px;
+        background-color: brown;
+    }
+</style>
+
+<body>
+    <div id='root'>
+        <div style="border-style: dashed;" :class="a" @click='changeMood'>
+            <h2>名称: {{name}}</h2>
+        </div>
+        <!-- 绑定class样式,适用于:样式类名不确定,需要动态指定,这里绑定了一个属性 -->        
+
+        <div :class="arry">
+            <h2>名称: {{name}}</h2>
+        </div>
+        <!-- 有可能变化的都要:class来调整,这里绑定了一个数组,个数和名字都不确定 -->
+
+        <div :class="classObj">
+            <h2>名称: {{name}}</h2>
+        </div>
+        <!-- 样式和名字都确定,但是我需要动态操作里面的样式,这里绑定了一个子对象 -->
+
+        <div :style="styleObj">
+            <h2>名称: {{name}}</h2>
+        </div>
+        <!-- 内联样式style，用法和上面一样，都是通过v-bind来绑定东西 -->
+    </div>
+</body>
+
+<script>
+    new Vue({
+        el: '#root',
+        data: {
+            name: '空崎日奈',
+            a: 'normal',//v-bind绑定样式,注意是绑定对象data里的属性参数,这样的样式会汇总进class
+            arry: ['fan1', 'fan2'],//样式数组
+            classObj:{
+                fan1:false,
+                fan2:true//样式开关
+            },
+            styleObj:{
+                fontSize:'60px',//内联样式,但是要注意就不能写-了,要用驼峰命名
+                backgroundColor: 'aqua'
+            }
+        },
+        methods: {
+            changeMood() {
+                const arr = ['happy', 'sad', 'normal']
+                const index = Math.floor(Math.random() * 3)
+                this.a = arr[index]
+            },
+        },
+    })
+</script>
+
+</html>

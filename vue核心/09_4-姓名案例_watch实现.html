@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<body>
+<div id = 'root'>
+    姓:<input type="text"   v-model="na"> </input><br>
+    名:<input type="text"   v-model="nb"> </input><br>
+    <span>姓名: {{fullName}}</span><br>
+
+</div>
+</body>
+
+<script>
+    const vm = new Vue({
+        el: '#root',
+        data:{
+        na : '空崎',
+        nb : '日奈',
+        fullName : '默认的 空崎 - 日奈'
+    },
+    watch: {
+        na(newValue){
+            this.fullName = newValue +' - '+ this.nb
+        },
+        nb(newValue){
+            this.fullName = this.na +' - '+ newValue
+        },
+    },
+    })//看起来这功能用计算属性好一点,异步任务用watch比较好
+
+    //定时器的回调函数,ajax的回调函数要写成箭头函数,因为这样的this指向才是vm 或者 组件实例对象
+    //promise的回调函数也是
+</script>
+</html>

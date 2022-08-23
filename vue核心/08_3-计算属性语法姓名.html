@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<body>
+<div id = 'root'>
+    姓:<input type="text"   v-model="na"> </input><br>
+    名:<input type="text"   v-model="nb"> </input><br>
+    <!-- <span>姓名: {{na}}-{{nb}}</span><br> -->
+    <span>姓名: {{fullName}}</span><br>
+    <span>姓名: {{fullName}}</span><br>
+    <!-- get()的缓存 -->
+    <span>姓名: {{fullName}}</span><br>
+    <!-- fullName是方法,每次改动导致参数变化时,方法都会执行一次 -->
+
+    <span>我是用的简单写法 姓名: {{easyfullName}}</span><br>
+
+</div>
+</body>
+
+<script>
+    const vm = new Vue({
+        el: '#root',
+        data:{
+        na : '空崎',
+        nb : '日奈',
+    },
+    methods:{
+        demo(){
+            console.log('我才是对象方法,下面那个是computed,调用方式别搞错了!');
+            //computed中的fullName虽然酷似对象,但并不是,
+            //在模板语法里当做data的数据用就好
+        }
+    },
+    computed:{//计算属性
+        fullName:{
+            get(){
+                console.log('调用了get!');
+                return this.na+' - '+this.nb;//get读取到的时候就会调用
+                //初次读取到fullName时,get会被调用
+                //所依赖的属性变化时,get也会被调用
+            },//get用来读
+            set(value){
+                console.log('我被修改了!我认为现在是'+value+'但是没用!');//直接改无效,依赖属性没变化
+                const arr = value.split('-')//分隔符来判断姓-名,split分割字符串数组
+                this.na = arr[0]
+                this.nb = arr[1]
+                console.log('我被修改了!我认为现在是'+value+'成功!');
+            }//set用来修改
+        },
+        easyfullName(){//简单get写法,一般属性都是只读的,所以这么写方便一点
+            console.log('我是简单的get写法');
+            return this.na+' - '+this.nb;
+        }
+    }
+    })
+</script>
+</html>

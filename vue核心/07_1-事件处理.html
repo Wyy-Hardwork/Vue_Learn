@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<body>
+<div id = 'root'>
+    <h2>名称: {{name}}</h2>
+    <h2>年龄: {{age}}</h2>
+    <button v-on:click="showInfo">点我提示信息(不传参)</button>
+    <button @click="showInfo2($event,66)">点我也可以提示信息(传参)</button>
+    <!-- 绑定事件,v-on简写是@ -->
+    <!-- 括号里要传event不但要写完整(不能写一个e,但是后面实例化可以),而且还要$;多个参数打个括号就行了,位置对应 -->
+</div>
+</body>
+
+<script>
+    const vm =new Vue({
+        el: '#root',
+        data:{
+        name : '空崎日奈',
+        age : '十七岁',
+        },
+        methods:{
+            showInfo(event){//箭头都不要了,想起来了,event是以前的那个e,里面有target定标签属性
+                console.log(event);
+                console.log(this);//此处的this就是对象vm,应该不用说了
+                //记住箭头函数会ban掉自己的this,除非外面另外定义
+            },
+
+            showInfo2(e,a){
+                console.log(e,a);
+            }
+        }
+    })
+    //showInfo俩方法是没有数据代理的,不会进_data,没必要
+</script>
+</html>

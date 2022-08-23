@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<body>
+<div id = 'root'>
+    <ul>
+        <li v-for="(v,id) in filPersons" :key='v.id'>
+            <!-- v象征着所有数组,它会遍历所有索引,意思是你的操作会同时反馈给v[1],v[2]...而你只要改v -->
+            {{v.id}}-
+            {{v.name}}-
+            {{v.age}}-
+            {{v.sex}}-
+            {{index}}<!--索引index-->
+        </li>
+    </ul>
+    <input type="text" placeholder="请输入名字" v-model="keyWord">
+    <button @click="sortType = 2">升序</button>
+    <button @click="sortType = 0">原序</button>
+    <button @click="sortType = 1">降序</button>
+</div>
+</body>
+
+<script>
+        new Vue({
+        el: '#root', 
+        data:{
+        sortType:0,//顺序结果
+        keyWord:'',//双向实时收集用户输入
+        persons:[//数组
+            {id:'001',name:'马冬梅',age:18,sex:'女'},//数组内,单个检索多个数据,可以用花括号
+            {id:'002',name:'周冬雨',age:20,sex:'女'},
+            {id:'003',name:'周杰伦',age:29,sex:'男'},
+            {id:'004',name:'温兆伦',age:23,sex:'男'},
+        ],
+    },
+    computed: {//conputed要值记得一定要返回呀,
+        filPersons(){//filPersons是个对象数组,get省去让它看起来像个方法
+            const arr = this.persons.filter((x)=>{//filter创建新的符合条件数组,原数组不受影响
+                console.log(x);
+                return x.name.indexOf(this.keyWord) !== -1//filter要求return
+            })
+            if(this.sortType!==0){
+                arr.sort((a,b)=>{//a - b升序,b - a降序,1是升序
+                    return this.sortType === 1?b.age - a.age:a.age - b.age//自带return
+                    //等于1的b-a降序,否则升序(第二个数据和第一个数据间的顺序决定升序降序)
+                    //
+                })//改变原数组,有return
+            }
+            return arr//一个return只能管当前的花括号,filPersons没有返回值了,这里加个return
+        }
+    },
+})
+</script>
+</html>

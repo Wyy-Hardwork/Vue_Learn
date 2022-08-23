@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+
+<body>
+    <div id='root'>
+        <h2>名称: {{name}}</h2>
+        <h2>年龄: {{age}}</h2>
+        <button @click='addx'>点我添加性别</button>
+        <h2 v-if="like.gender">性别: {{like.gender}}</h2>
+        <!-- vue中undefined的值是不会显示的 -->
+        <!-- 这个if属性名,可用于验证属性是否存在(true显示,false隐藏) -->
+        <hr />
+        <h2>奇怪的嗜好a: {{like.sex}}</h2>
+        <h2>跟老师喜欢: {{like.toy.sensei}} 跟同学喜欢: {{like.toy.girls}}</h2>
+        <hr>
+        <h2>朋友们</h2>
+        <ul>
+            <li v-for = '(f,index) in friends' :key="index">
+                {{f.name}}--
+                {{f.age}}
+            </li>
+        </ul>
+        <hr>
+        <ul>
+            <li v-for = 'n in test'>
+                <!-- 非子对象集会直接给值,子对象集会全盘托出,包括大括号 -->
+                {{n}}--
+                {{test}}--
+                <!-- 每一行的值n会自动对应的,前面是有子对象所以用了f.name来找值,不然全输出了,还带大括号 -->
+            </li>
+        </ul>
+    </div>
+</body>
+
+<script>
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            name: '空崎日奈',
+            age: '十七岁',
+            //如果我想要添加一个响应式属性,怎么办?  使用Vue提供的api  Vue.set(目标对象,键,值)
+            //不用vue原生property加的属性没有get,set不是响应式数据
+
+            //另外data最表层是不能添加响应式数据的(不可给data(根数据),只能往子对象里面送)
+            like: {
+                sex: '和老师love',
+                toy: {
+                    sensei: '金金',
+                    girls: '小豆豆'
+                }
+            },
+            friends: [
+                { name: '下江小春', age: 16 },
+                { name: '阿慈古日富美', age: 17 },
+                { name: '白洲梓', age: 17 },
+            ],
+            test : {
+                a : 1,
+                b : 2,
+                c : 3
+            },
+        },
+        methods: {
+                addx(){
+                    Vue.set(this.like,'gender','女')
+                    //this.$set效果一样
+                }
+            },
+    })
+</script>
+
+</html>

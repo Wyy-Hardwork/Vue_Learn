@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src='./js/vue.js'></script>
+    <script>Vue.config.productionTip = false</script>
+</head>
+<body>
+<div id = 'root'>
+    姓:<input type="text"   v-model="na"> </input><br>
+    名:<input type="text"   v-model="nb"> </input><br>
+    <span>姓名: {{na+' - '+nb}}</span><br>
+    <span>姓名: {{na}}-{{nb}}</span>
+</div>
+</body>
+
+<script>
+    new Vue({
+        el: '#root',
+        data:{
+        na : '空崎',
+        nb : '日奈',
+        name : ''
+    }
+    })
+</script>
+</html>
